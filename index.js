@@ -24,6 +24,15 @@ async function run(){
             const result = await reviewsCollection.find(query).toArray();
             res.send(result);
         })
+
+        app.post('/review', async(req, res) => {
+            const data = req.body;
+            const doc = data;
+            const result = await reviewsCollection.insertOne(doc);
+            res.send(result)
+        })
+
+        console.log('Database connected')
     }
     finally{
 
