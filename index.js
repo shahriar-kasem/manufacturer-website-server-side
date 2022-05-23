@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
@@ -20,6 +21,7 @@ async function run(){
         const reviewsCollection = client.db('manufacturer-website').collection('reviews');
         const productsCollection = client.db('manufacturer-website').collection('products');
         const ordersCollection = client.db('manufacturer-website').collection('orders');
+        const usersCollection = client.db('manufacturer-website').collection('users');
 
         // get
         app.get('/reviews', async(req, res) => {
@@ -51,6 +53,22 @@ async function run(){
             const doc = data;
             const result = await ordersCollection.insertOne(doc);
             res.send(result)
+        })
+
+        // put
+        app.put('/user/:email', async(req, res) => {
+            const email = req.params.email;
+            const user = req.body;
+            const filter = {email: email};
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: user,
+            }
+            const result = await usersCollection.updateOne(filter, updateDoc, options);
+            const token = jwt.sign({email: email}, process.env.ACCESS_TOKEN, {
+                expiresIn: '1d'
+            })
+            res.send({result, token});
         })
 
         console.log('Database connected')
