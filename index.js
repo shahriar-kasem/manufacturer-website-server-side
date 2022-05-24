@@ -108,6 +108,12 @@ async function run() {
             const result = await ordersCollection.insertOne(doc);
             res.send(result)
         })
+        app.post('/add/product', verifyJWT, verifyAdmin, async (req, res) => {
+            const data = req.body;
+            const doc = data;
+            const result = await productsCollection.insertOne(doc);
+            res.send(result)
+        })
 
         // put
         app.put('/user/:email', async (req, res) => {
