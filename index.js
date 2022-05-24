@@ -39,6 +39,19 @@ async function run() {
         const ordersCollection = client.db('manufacturer-website').collection('orders');
         const usersCollection = client.db('manufacturer-website').collection('users');
 
+        // verifyAdmin
+        async function verifyAdmin(req, res, next){
+            const email = req.query.email;
+            const requester = req.decoded.email;
+            const requesterAccount = await usersCollection.findOne({ email: requester, })
+            if (requesterAccount.role === 'Admin') {
+                next();
+            }
+            else{
+                res.status(403).send({message: 'forbidden access'})
+            }
+        }
+
         // get
         app.get('/reviews', async (req, res) => {
             const query = {};
@@ -56,18 +69,10 @@ async function run() {
             const result = await productsCollection.findOne(query);
             res.send(result)
         })
-        app.get('/users', verifyJWT, async (req, res) => {
-            const email = req.query.email;
-            const requester = req.decoded.email;
-            const requesterAccount = await usersCollection.findOne({ email: requester, })
-            if (requesterAccount.role === 'Admin') {
-                const query = {};
-                const result = await usersCollection.find(query).toArray();
-                res.send(result);
-            }
-            else{
-                res.status(403).send({message: 'forbidden access'})
-            }
+        app.get('/users', verifyJWT, verifyAdmin, async (req, res) => {
+            const query = {};
+            const result = await usersCollection.find(query).toArray();
+            res.send(result);
         })
 
         // post
