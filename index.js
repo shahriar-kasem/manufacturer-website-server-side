@@ -14,6 +14,7 @@ app.use(express.json());
 const uri = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASS}@cluster0.zz02t.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+// verifyJWT
 function verifyJWT(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -63,18 +64,23 @@ async function run() {
             const result = await productsCollection.find(query).toArray();
             res.send(result);
         })
-        app.get('/product/:id', async (req, res) => {
+        app.get('/product/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await productsCollection.findOne(query);
             res.send(result)
+        })
+        app.get('/orders', verifyJWT, verifyAdmin, async (req, res) => {
+            const query = {};
+            const result = await ordersCollection.find(query).toArray();
+            res.send(result);
         })
         app.get('/users', verifyJWT, verifyAdmin, async (req, res) => {
             const query = {};
             const result = await usersCollection.find(query).toArray();
             res.send(result);
         })
-        app.get('/admin/:email', async(req, res)=> {
+        app.get('/admin/:email', verifyJWT, async(req, res)=> {
             const email = req.params.email;
             const findUser = await usersCollection.findOne({email: email});
             const isAdmin = findUser.role === 'Admin';
@@ -119,9 +125,7 @@ async function run() {
             const updateDoc = {
                 $set: updatedData,
             };
-            console.log(updateDoc)
             const user = await usersCollection.updateOne(filter,updateDoc)
-            console.log(user)
             res.send(user);
         })
 
