@@ -74,6 +74,12 @@ async function run() {
             const result = await usersCollection.find(query).toArray();
             res.send(result);
         })
+        app.get('/admin/:email', async(req, res)=> {
+            const email = req.params.email;
+            const findUser = await usersCollection.findOne({email: email});
+            const isAdmin = findUser.role === 'Admin';
+            res.send({admin: isAdmin})
+        })
 
         // post
         app.post('/review', async (req, res) => {
@@ -106,10 +112,9 @@ async function run() {
         })
 
         // patch
-        app.patch('/users', verifyJWT, verifyAdmin, async(req, res) => {
+        app.patch('/user/admin', verifyJWT, verifyAdmin, async(req, res) => {
             const email = req.query.email;
             const updatedData = req.body;
-            console.log(updatedData);
             const filter = {email: email};
             const updateDoc = {
                 $set: updatedData,
