@@ -105,6 +105,21 @@ async function run() {
             res.send({ result, accessToken });
         })
 
+        // patch
+        app.patch('/users', verifyJWT, verifyAdmin, async(req, res) => {
+            const email = req.query.email;
+            const updatedData = req.body;
+            console.log(updatedData);
+            const filter = {email: email};
+            const updateDoc = {
+                $set: updatedData,
+            };
+            console.log(updateDoc)
+            const user = await usersCollection.updateOne(filter,updateDoc)
+            console.log(user)
+            res.send(user);
+        })
+
         console.log('Database connected')
     }
     finally {
