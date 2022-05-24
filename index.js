@@ -143,6 +143,14 @@ async function run() {
             res.send(user);
         })
 
+        // delete
+        app.delete('/product/:id', verifyJWT, verifyAdmin, async(req,res) =>{
+            const id = req.params.id;
+            const filter = {_id: ObjectId(id)};
+            const result = await productsCollection.deleteOne(filter);
+            res.send(result);
+        })
+
         console.log('Database connected')
     }
     finally {
