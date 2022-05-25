@@ -88,6 +88,12 @@ async function run() {
             const result = await usersCollection.find(query).toArray();
             res.send(result);
         })
+        app.get('/user/profile', verifyJWT, async (req, res) => {
+            const email = req.query.email;
+            const query = {email: email};
+            const result = await usersCollection.findOne(query);
+            res.send(result);
+        })
         app.get('/admin/:email', verifyJWT, async(req, res)=> {
             const email = req.params.email;
             const findUser = await usersCollection.findOne({email: email});
@@ -133,6 +139,16 @@ async function run() {
 
         // patch
         app.patch('/user/admin', verifyJWT, verifyAdmin, async(req, res) => {
+            const email = req.query.email;
+            const updatedData = req.body;
+            const filter = {email: email};
+            const updateDoc = {
+                $set: updatedData,
+            };
+            const user = await usersCollection.updateOne(filter,updateDoc)
+            res.send(user);
+        })
+        app.patch('/user/profile', verifyJWT, async(req, res) => {
             const email = req.query.email;
             const updatedData = req.body;
             const filter = {email: email};
