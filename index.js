@@ -61,6 +61,11 @@ async function run() {
             const result = await reviewsCollection.find(query).toArray();
             res.send(result);
         })
+        app.get('/blogs', async (req, res) => {
+            const query = {};
+            const result = await blogsCollection.find(query).toArray();
+            res.send(result);
+        })
         app.get('/products', async (req, res) => {
             const query = {};
             const result = await productsCollection.find(query).toArray();
