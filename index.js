@@ -40,6 +40,7 @@ async function run() {
         const ordersCollection = client.db('manufacturer-website').collection('orders');
         const usersCollection = client.db('manufacturer-website').collection('users');
         const subscribersCollection = client.db('manufacturer-website').collection('subscribers');
+        const blogsCollection = client.db('manufacturer-website').collection('blogs');
 
         // verifyAdmin
         async function verifyAdmin(req, res, next){
@@ -107,6 +108,12 @@ async function run() {
             const data = req.body;
             const doc = data;
             const result = await reviewsCollection.insertOne(doc);
+            res.send(result)
+        })
+        app.post('/add/blog', verifyJWT, verifyAdmin, async (req, res) => {
+            const data = req.body;
+            const updateDoc = data;
+            const result = await blogsCollection.insertOne(updateDoc);
             res.send(result)
         })
         app.post('/order', verifyJWT, async (req, res) => {
