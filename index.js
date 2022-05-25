@@ -190,6 +190,12 @@ async function run() {
             const result = await productsCollection.deleteOne(filter);
             res.send(result);
         })
+        app.delete('/blog/:id', verifyJWT, verifyAdmin, async(req,res) =>{
+            const id = req.params.id;
+            const filter = {_id: ObjectId(id)};
+            const result = await blogsCollection.deleteOne(filter);
+            res.send(result);
+        })
 
         console.log('Database connected')
     }
