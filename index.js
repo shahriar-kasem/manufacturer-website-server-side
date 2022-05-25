@@ -39,6 +39,7 @@ async function run() {
         const productsCollection = client.db('manufacturer-website').collection('products');
         const ordersCollection = client.db('manufacturer-website').collection('orders');
         const usersCollection = client.db('manufacturer-website').collection('users');
+        const subscribersCollection = client.db('manufacturer-website').collection('subscribers');
 
         // verifyAdmin
         async function verifyAdmin(req, res, next){
@@ -135,6 +136,17 @@ async function run() {
                 expiresIn: '1d'
             })
             res.send({ result, accessToken });
+        })
+        app.put('/subscribe/:email', async(req, res)=>{
+            const email = req.params.email;
+            const subscriber = req.body;
+            const filter = {email: email};
+            const options = {upsert: true};
+            const updateDoc = {
+                $set: subscriber,
+            }
+            const result = await subscribersCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
         })
 
         // patch
