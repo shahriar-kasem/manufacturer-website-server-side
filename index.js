@@ -223,6 +223,17 @@ async function run() {
             const user = await usersCollection.updateOne(filter, updateDoc)
             res.send(user);
         })
+        app.patch('/order/update/:id', verifyJWT, verifyAdmin, async (req, res) => {
+            const id = req.params.id;
+            const updatedData = req.body;
+            const filter = {_id: ObjectId(id)};
+            console.log(updatedData)
+            const updateDoc = {
+                $set: updatedData,
+            };
+            const result = await ordersCollection.updateOne(filter, updateDoc)
+            res.send(result);
+        })
 
         // delete
         app.delete('/product/:id', verifyJWT, verifyAdmin, async (req, res) => {
