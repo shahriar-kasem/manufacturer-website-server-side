@@ -10,7 +10,7 @@ Click here: https://github.com/programming-hero-web-course1/manufacturer-website
 Click here: https://github.com/programming-hero-web-course1/manufacturer-website-server-side-shahriarkasem
 
 ### Notes:
-`This website is based on 'Manufacturer-website'. `
+`This website is based on 'Manufacturer-website'. In this website people can purchase goods with minimum price and minimum quantity. They can give review. Admin can add blogs and manage full website from Dashboard(different control options available). People can see their order list from Dashboard and they can cancel any order if it's not paid yet. I'm continuously improving website functionality. You can subscribe for regular updates.`
 
 ### Framework/library used in this website: 
 * React 
