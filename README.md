@@ -9,8 +9,16 @@ Click here: https://github.com/shahriar-kasem/manufacturer-website-client-side
 ## [Repo link server-side](https://github.com/shahriar-kasem/manufacturer-website-server-side)
 Click here: https://github.com/shahriar-kasem/manufacturer-website-server-side
 
-### Notes:
-`This website is based on 'Manufacturer-website'. In this website people can purchase goods with minimum price and minimum quantity. They can give review. Admin can add blogs and manage full website from Dashboard(different control options available). People can see their order list from Dashboard and they can cancel any order if it's not paid yet. I'm continuously improving website functionality. You can subscribe for regular updates.`
+### Website overview:
+* Developed a full-stack project for the manufacturer with Authentication and Authorization facilities
+* Maximize user experience and makes full website mobile and desktop responsive
+* Created an admin panel for managing full website
+* Customers can purchase goods with minimum quantity
+* Implemented payment method so customers can pay with credit cards
+* Customers can see their order list from Dashboard. and they can cancel any order if it's unpaid
+* Customers can give review 
+* Customers can see and manage their profile information on Dashboard route
+* Customers can read website-related information from the blog route
 
 ### Framework/library used in this website: 
 * React 
