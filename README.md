@@ -4,10 +4,10 @@
 Click here: https://manufacturer-website-ea312.web.app/
 
 ## [Repo link client-side](https://github.com/shahriar-kasem/manufacturer-website-client-side)
-Click here: https://github.com/shahriar-kasem/manufacturer-website-client-side
+Click here: https://github.com/shahriarkasem/manufacturer-website-client-side
 
 ## [Repo link server-side](https://github.com/shahriar-kasem/manufacturer-website-server-side)
-Click here: https://github.com/shahriar-kasem/manufacturer-website-server-side
+Click here: https://github.com/shahriarkasem/manufacturer-website-server-side
 
 ### Website overview:
 * Developed a full-stack project for the manufacturer with Authentication and Authorization facilities
